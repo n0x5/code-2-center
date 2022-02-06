@@ -34,3 +34,6 @@ wp_enqueue_style( 'code2center-style', get_stylesheet_uri() );
 add_action( 'wp_enqueue_scripts', 'code2center_scripts' );
 
 add_theme_support( 'title-tag' );
+
+add_theme_support( 'post-formats', array( 'gallery', 'video', 'audio', 'aside' ) );
+

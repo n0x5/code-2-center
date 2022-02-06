@@ -49,6 +49,7 @@ if ( $post->post_parent ) : ?>
 <?php the_content('-> read more'); ?>
 
 <?php endwhile; ?>
+
 <?php endif; ?>
 </div>
 </div>

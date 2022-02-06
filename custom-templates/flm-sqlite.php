@@ -28,6 +28,7 @@ $dir = 'sqlite:/home/coax/websites/rnd/wp-content/movies-flm.db';
 $dbh  = new PDO($dir, null, null, [PDO::SQLITE_ATTR_OPEN_FLAGS => PDO::SQLITE_OPEN_READONLY]) or die("cannot open the database");
 //$query =  "SELECT * FROM moviesflm order by year desc";
 $query = "select moviesflm.*, actressflm.actress, flm_actress2.name, flm_actress2.actress_born from moviesflm left join actressflm on substr(moviesflm.title, -7, -100) = actressflm.title collate nocase left join flm_actress2 on flm_actress2.films like '%' || moviesflm.imdb || '%' group by moviesflm.imdb order by year desc";
+	
 foreach ($dbh->query($query) as $row)
 {
 $img_file =  explode('/', $row[0]);
@@ -53,7 +54,7 @@ $im_final = $img_file[4] . '.jpg';
 <div class="titl" style="width: 180px;"></div><br>
 
 <?php
-$child_stars = explode(', ', $row[11]);
+$child_stars = explode(', ', $row[12]);
 $img_dir3 = '/home/coax/websites/rnd/wp-content/flm_actress/' . str_replace(' ', '_', $child_stars[0]) . '.jpg';
 foreach ($child_stars as $child_star) {
 $child_star_image = str_replace(' ', '_', $child_star);
