@@ -16,44 +16,52 @@ if(has_tag()) {
 $post_tags = get_the_tags();
 ?>
 
-<div class="post" style="background-color: #740000;">
+<div class="post" style="background-color: #740000;padding: 4px;border-bottom: 1px solid rgb(0 0 0);">
 
 
 <?php
 $imdbid = $post_tags[0]->name;
-$dir = 'sqlite:/home/coax/websites/rnd/wp-content/movies-flm.db';
+
+$dir = 'sqlite:/home/user/websites/hidden3/html/databases/movies-flm.db';
 $dbh  = new PDO($dir, null, null, [PDO::SQLITE_ATTR_OPEN_FLAGS => PDO::SQLITE_OPEN_READONLY]) or die("cannot open the database");
-$query = "select moviesflm.*, actressflm.actress, flm_actress2.name, flm_actress2.actress_born from moviesflm left join actressflm on substr(moviesflm.title, -7, -100) = actressflm.title collate nocase left join flm_actress2 on flm_actress2.films like '%' || moviesflm.imdb || '%' where moviesflm.imdb like '%" . $imdbid . "%' group by moviesflm.imdb order by year desc";
+$query = "select * from flmlist where imdb like '%" . $imdbid . "%' group by imdb order by year desc";
 foreach ($dbh->query($query) as $row) {
-?> <h1 style="display:inline;">Movie review:</h1> <h2 style="display:inline;"> <a style="color:white;" href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2> <?php
-$img_file =  explode('/', $row[0]);
-$im_final = $img_file[4] . '.jpg';
+?> <h1 style="display:inline;">Movie info:</h1> <h2 style="display:inline;"> <a style="color:white;" href="<?php the_permalink(); ?>"><?php the_title(); ?></a> (<?php echo $row[8]; ?>) </h2> <?php
+$im_final = $row[0] . '.jpg';
 ?>
 
-	
-<img style="display:inline;" src=/wp-content/covers/<?php echo $im_final; ?> width="200" />
+    
+<img style="display:inline;" src=https://hidden.domain.org/static/covers_flm/<?php echo $im_final; ?> width="200" />
 
-<div class="infos"> <?php echo $row[3]; ?> </div>
-	<br><h2>Gallery:</h2><br>
+<br><h2>Info:</h2><br>
+<div class="infos"> Title: <?php echo $row[2]; ?> </div>
+<div class="infos"> English Title: <?php echo $row[1]; ?> </div>
+<div class="infos"> Director: <?php echo $row[3]; ?> </div>
+<div class="infos"> Stars: <?php echo $row[4]; ?> </div>
+<div class="infos"> Genres: <?php echo $row[5]; ?> </div>
+<div class="infos"> Plot: <?php echo $row[7]; ?> </div>
+<div class="infos"> Country: <?php echo $row[9]; ?> </div>
+<div class="infos"> Language: <?php echo $row[10]; ?> </div>
+    <br><h2>Gallery:</h2><br>
 <?php
-$img_dir = '/home/coax/websites/rnd/wp-content/flm_images/' . $img_file[4];
+$img_dir = '/home/user/websites/hidden3/html/static/flm_images/' . $row[0];
 if (file_exists($img_dir)) {
     $files = glob("$img_dir/*");
     sort($files, SORT_NATURAL | SORT_FLAG_CASE);
     foreach ($files as $file) {
     $file_final = explode("/", $file); ?>
-  <a href="/wp-content/flm_images/<?php echo $file_final[7]; ?>/<?php echo $file_final[8]; ?>"><img src="/wp-content/flm_images/<?php echo $file_final[7]; ?>/<?php echo $file_final[8]; ?>" width="90" /></a> 
+  <a href="https://hidden.domain.org/static/flm_images/<?php echo $file_final[8]; ?>/<?php echo $file_final[9]; ?>"><img src="https://hidden.domain.org/static/flm_images/<?php echo $file_final[8]; ?>/<?php echo $file_final[9]; ?>" width="90" /></a> 
 
 
-	
+    
 <?php }} ?>
-	
+    
 
-	<br><br><h2>The review:</h2>
-	<?php the_content('-> read more'); ?>
-	</div>
+    <br><br><h2>The review:</h2>
+    <?php the_content('-> read more'); ?>
+    </div>
 <br><br>
-	
+    
 <?php                                    
 }
 $dbh = null;
