@@ -1,3 +1,1 @@
-<div id="sidebar">
-    <?php dynamic_sidebar( 'sidebar-german' ); ?>
-</div>
+<div id="sidebar"><?php dynamic_sidebar( 'sidebar-german' ); ?></div>

@@ -1,7 +1,5 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
-
-
 	
 <div id="main">
 
@@ -12,37 +10,12 @@
 <div id="sidebar"><?php get_sidebar(); ?></div>
 <div id="content">
 <?php
-if ( $post->post_parent ) {
-    $children = wp_list_pages( array(
-        'title_li' => '',
-        'child_of' => $post->post_parent,
-        'echo'     => 0
-    ) );
-   $page_link = get_page_link( $post->post_parent );
-    $title = get_the_title( $post->post_parent );
-} else {
-    $children = wp_list_pages( array(
-        'title_li' => '',
-        'child_of' => $post->ID,
-        'echo'     => 0
-    ) );
-    $page_link = get_page_link( $post->post_parent );
-    $title = get_the_title( $post->ID );
-}
-
-if ( $post->post_parent ) : ?>
-    <h2><?php // echo $title ; ?></h2>
-    <h2><?php echo '<a href="/blog">Home</a> -> <a href=' . $page_link .'>' . $title . '</a>'; ?> -> <?php the_title(); ?></h2>
-    <ul>
-        <?php // echo $children; ?>
-    </ul>
-
-<?php else : ?>
-<h2><a href="/blog">Home</a></h2>
-
-<h2 style="text-align: center;"> -> <?php the_title() ; ?></h2>
-
-<?php endif; ?>
+$title2 = get_the_title($post->ID);
+$url = get_permalink(get_option('page_for_posts' ));
+$page_url3 = '<a href=' . $url .'>' . 'Home' . '</a>';
+echo '<h2>' . $page_url3 .' -> '. $title2 . '</h2>';
+?>
+	
 <?php if (have_posts()) : ?><?php while (have_posts()) : the_post(); ?>
 	
 <div class="post">
@@ -79,8 +52,7 @@ $post_title = get_the_title($post->post_parent);
 			Uploaded: <?php echo $date3; ?> <?php echo $uploaded; ?> <br>
 			File Url: <?php echo $url3; ?> <br>
 			Mime type: <?php echo get_post_mime_type(); ?> <br><br>
-			
-			
+					
 			Length: <?php echo $length; ?> <br>
 			Format: <?php echo $fformat; ?> <br>
 			Audio codec: <?php echo $audio_codec; ?> <br>

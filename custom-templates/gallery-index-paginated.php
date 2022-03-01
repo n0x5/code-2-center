@@ -110,7 +110,6 @@ margin-bottom: 25px;
 
 $paged = get_query_var( 'paged', 1 );
 
-// orderby modified = repeated/duplicate posts in pagination
 $args = array(
 'post_parent' => $post->ID,
 'post_type' => 'page',
@@ -120,7 +119,6 @@ $args = array(
 );
 
 $the_query = new WP_Query( $args ); ?>
-
 
 <?php if ( $the_query->have_posts() ) : ?>
 

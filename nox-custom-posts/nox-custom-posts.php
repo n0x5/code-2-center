@@ -18,7 +18,6 @@ function wpdocs_scripts_method() {
 add_action( 'wp_enqueue_scripts', 'wpdocs_scripts_method' );
 
 
-
 function exclude_category( $query ) { if ( $query->is_home() && $query->is_main_query() ) { $query->set( 'cat', '-261' );
 add_action( 'wp_enqueue_scripts', 'wpdocs_scripts_method' );}
 }
@@ -46,10 +45,7 @@ function all_settings_link() {
    }
 add_action('admin_menu', 'all_settings_link');
 
-
-
 add_filter( 'big_image_size_threshold', '__return_false' );
-
 
 
 function modify_attachment_link( $markup, $id, $size, $permalink, $icon, $text )
@@ -92,7 +88,7 @@ function modify_attachment_link( $markup, $id, $size, $permalink, $icon, $text )
 
 add_filter( 'wp_get_attachment_link', 'modify_attachment_link', 10, 6, );
 
-
+add_filter( 'use_default_gallery_style', '__return_false' );
 remove_shortcode('gallery', 'gallery_shortcode');
 add_shortcode('gallery', 'custom_gallery');
 
