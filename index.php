@@ -14,6 +14,7 @@
 <?php
 if(has_tag()) {
 $post_tags = get_the_tags();
+if (strpos($post_tags[0]->name, 'tt') === 0) {
 ?>
 
 <div class="post" style="background-color: #740000;padding: 4px;border-bottom: 1px solid rgb(0 0 0);">
@@ -22,16 +23,16 @@ $post_tags = get_the_tags();
 <?php
 $imdbid = $post_tags[0]->name;
 
-$dir = 'sqlite:/home/user/websites/hidden3/html/databases/movies-flm.db';
+$dir = 'sqlite:/home/coax/websites/hidden3/html/databases/movies-flm.db';
 $dbh  = new PDO($dir, null, null, [PDO::SQLITE_ATTR_OPEN_FLAGS => PDO::SQLITE_OPEN_READONLY]) or die("cannot open the database");
 $query = "select * from flmlist where imdb like '%" . $imdbid . "%' group by imdb order by year desc";
 foreach ($dbh->query($query) as $row) {
-?> <h1 style="display:inline;">Movie info:</h1> <h2 style="display:inline;"> <a style="color:white;" href="<?php the_permalink(); ?>"><?php the_title(); ?></a> (<?php echo $row[8]; ?>) </h2> <?php
+?> <h1 style="display:inline;">Movie info:</h1> <h2 style="display:inline;"> <a style="color:white;" href="<?php the_permalink(); ?>"><?php echo $row[2]; ?></a> (<?php echo $row[8]; ?>) </h2> <?php
 $im_final = $row[0] . '.jpg';
 ?>
-
+<br><br>
     
-<img style="display:inline;" src=https://hidden.domain.org/static/covers_flm/<?php echo $im_final; ?> width="200" />
+<img style="display:inline;" src=https://hidden.machinecode.org/static/covers_flm/<?php echo $im_final; ?> width="200" />
 
 <br><h2>Info:</h2><br>
 <div class="infos"> Title: <?php echo $row[2]; ?> </div>
@@ -42,15 +43,16 @@ $im_final = $row[0] . '.jpg';
 <div class="infos"> Plot: <?php echo $row[7]; ?> </div>
 <div class="infos"> Country: <?php echo $row[9]; ?> </div>
 <div class="infos"> Language: <?php echo $row[10]; ?> </div>
+<div class="infos"> IMDB: <?php echo $row[0]; ?> </div>
     <br><h2>Gallery:</h2><br>
 <?php
-$img_dir = '/home/user/websites/hidden3/html/static/flm_images/' . $row[0];
+$img_dir = '/home/coax/websites/hidden3/html/static/flm_images/' . $row[0];
 if (file_exists($img_dir)) {
     $files = glob("$img_dir/*");
     sort($files, SORT_NATURAL | SORT_FLAG_CASE);
     foreach ($files as $file) {
     $file_final = explode("/", $file); ?>
-  <a href="https://hidden.domain.org/static/flm_images/<?php echo $file_final[8]; ?>/<?php echo $file_final[9]; ?>"><img src="https://hidden.domain.org/static/flm_images/<?php echo $file_final[8]; ?>/<?php echo $file_final[9]; ?>" width="90" /></a> 
+  <a href="https://hidden.machinecode.org/static/flm_images/<?php echo $file_final[8]; ?>/<?php echo $file_final[9]; ?>"><img src="https://hidden.machinecode.org/static/flm_images/<?php echo $file_final[8]; ?>/<?php echo $file_final[9]; ?>" width="90" /></a> 
 
 
     
@@ -63,7 +65,7 @@ if (file_exists($img_dir)) {
 <br><br>
     
 <?php                                    
-}
+}}
 $dbh = null;
 } else { ?>
     <div class="title"><h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2><div class="subhead"><?php the_time('F jS, Y') ?></div></div>

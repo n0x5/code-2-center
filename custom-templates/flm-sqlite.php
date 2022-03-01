@@ -13,6 +13,7 @@ border: 1px solid #316291;
 }
 </style>
 
+
 <h2 style="text-align: center;"><?php the_title() ; ?></h2>
 
 <?php the_content('more))'); ?>

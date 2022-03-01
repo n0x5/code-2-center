@@ -10,6 +10,13 @@ License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
+li {
+	line-height: 170%;
+	list-style: none;
+}
+.imgobj {
+width: 1000px !important;
+}
 body {
 font-family: Verdana, Helvetica, Arial, sans-serif;
 font-size: 11px;
@@ -27,7 +34,7 @@ margin-bottom: 26px;
 }
 #sidebar {
 float: left;
-width: 180px;
+width: 230px;
 }
 #content {
 float: right;

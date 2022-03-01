@@ -156,11 +156,15 @@ $args = array(
 $the_query = new WP_Query( $args ); ?>
 
 <?php if ( $the_query->have_posts() ) : ?>
-	<div id="count"><?php $count = $the_query->found_posts; echo $count . ' wallpapers'; ?></div>
+    <div id="count"><?php $count = $the_query->found_posts; echo $count . ' wallpapers'; ?></div>
 
 <?php while ( $the_query->have_posts() ) : $the_query->the_post(); ?>
 <?php $url3 = esc_url(wp_get_attachment_url()); ?>
 <?php $trunc_nfo = substr(get_the_title(),0,18); ?>
+<?php $file3 = explode('/', $url3); ?>
+<?php $finalfile =  '/home/coax/websites/rnd/' . $file3[3] .'/'. $file3[4] .'/'. $file3[5] .'/'. $file3[6] .'/'. $file3[7]; 
+	 echo $finalfile;
+	?>
 <?php echo '<div class="galleries"> <a href="'.$url3.'" title="'.get_the_title().'">'.wp_get_attachment_image( get_the_ID(), 'large' ).'</a>'.'<div class="gallerytitle"><a href="'.get_permalink().'">'.$trunc_nfo.'</a></div>'; ?> 
     <?php $metadata2 = wp_get_attachment_metadata(); ?>
     <?php
