@@ -23,7 +23,7 @@ function register_my_menus() {
 add_action( 'init', 'register_my_menus' );
 
 $markup = array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'post-thumbnails', );
-add_theme_support( 'html5', $markup );	
+add_theme_support( 'html5', $markup );  
 
 add_filter( 'use_default_gallery_style', '__return_false' );
 
@@ -57,7 +57,11 @@ function rt_before_after($content) {
     //$aftercontent = 'And this will come after.';
     $aftercontent = '';
     $fullcontent = $beforecontent . $content . $aftercontent;
-
+    if ( is_page() ) {
     return $fullcontent;
+    }
+    else {
+        return $content;
+    }
 }
 add_filter('the_content', 'rt_before_after');

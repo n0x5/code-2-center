@@ -430,3 +430,36 @@ function zip_upload_mimes($existing_mimes = array()) {
     return $existing_mimes;
 }
 add_filter('upload_mimes', 'zip_upload_mimes', 999, 1);
+
+add_theme_support( 'post-thumbnails' );
+
+/**
+ * Auto add subpages to nav menus
+ */
+function custom_walker_nav_menu_start_el ( $item_output, $item, $depth, $args) {
+ 
+    // filter only page menu items
+    if( $item->object == 'page' ) {
+     
+        // set args
+        $args = array( 
+            'depth' => 1,
+            'child_of' => $item->object_id,
+            'echo' => 0, 
+            'title_li' => ''
+            );
+         
+        // check for children
+        $children = wp_list_pages( $args );
+ 
+        // append them as list if any
+        if ( $children )
+            $item_output = $item_output . '<ul class="children" >' . $children . '</ul>';
+     
+    }
+     
+    return $item_output;
+     
+}
+ 
+add_filter( 'walker_nav_menu_start_el', 'custom_walker_nav_menu_start_el', 10, 4 );

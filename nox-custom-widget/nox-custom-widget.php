@@ -137,6 +137,7 @@ $args3 = array(
 'post_parent' => '36666',
 'post_type' => 'page',
 'orderby' => array('date' => 'desc'),
+'posts_per_page' => 5,
 'meta_key' => '_thumbnail_id',
 );
 $the_query = new WP_Query( $args3 );
