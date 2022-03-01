@@ -1,4 +1,3 @@
-<?php if ( !function_exists('dynamic_sidebar')
-        || !dynamic_sidebar() ) : ?>
- 
-<?php endif; ?>
+<div id="sidebar">
+    <?php dynamic_sidebar( 'sidebar-1' ); ?>
+</div>

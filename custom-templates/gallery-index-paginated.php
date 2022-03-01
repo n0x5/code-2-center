@@ -100,34 +100,8 @@ margin-bottom: 25px;
 <title><?php echo esc_html(get_the_title()); ?></title>
 <div class="mainbody">
 
-        <?php
-if ( $post->post_parent ) {
-    $children = wp_list_pages( array(
-        'title_li' => '',
-        'child_of' => $post->post_parent,
-        'echo'     => 0
-    ) );
-   $page_link = get_page_link( $post->post_parent );
-    $title = get_the_title( $post->post_parent );
-} else {
-    $children = wp_list_pages( array(
-        'title_li' => '',
-        'child_of' => $post->ID,
-        'echo'     => 0
-    ) );
-    $page_link = get_page_link( $post->post_parent );
-    $title = get_the_title( $post->ID );
-}
-
-if ( $children ) : ?>
-   <h2><?php // if (get_the_title() != "Gallery") echo 'Part of gallery: <a href=' . $page_link .'>' . $title . '</a>'; ?></h2>
-
-<?php endif; ?>
-
-<h2><a href="/">Home</a> -> <?php the_title(''); ?></h2>
 
 <div class="banner"><?php // echo get_the_post_thumbnail($post_id, 'large', array( 'class' => 'alignleft' )); ?></div>
-
 
 
 <?php the_content(); ?>
