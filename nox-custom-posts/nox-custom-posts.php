@@ -11,8 +11,11 @@ Author URI:
 add_filter( 'xmlrpc_enabled', '__return_false' );
 
 function wpdocs_scripts_method() {
+	wp_register_script( 'custom-script-2', plugin_dir_url( __FILE__ ) . 'jquery.min.js', array(), false, true );
     wp_enqueue_script( 'custom-script-2', plugin_dir_url( __FILE__ ) . 'jquery.min.js', array(), false, true );
+	wp_register_script( 'custom-script-3', plugin_dir_url( __FILE__ ) . 'jquery.fancybox.min.js', array(), false, true );
     wp_enqueue_script( 'custom-script-3', plugin_dir_url( __FILE__ ) . 'jquery.fancybox.min.js', array(), false, true );
+	wp_register_script( 'custom-script-1', plugin_dir_url( __FILE__ ) . 'box.js', array(), false, true );
     wp_enqueue_script( 'custom-script-1', plugin_dir_url( __FILE__ ) . 'box.js', array(), false, true );
 }
 add_action( 'wp_enqueue_scripts', 'wpdocs_scripts_method' );
@@ -31,6 +34,7 @@ function organic_origin_gutenberg_styles() {
 add_action( 'enqueue_block_editor_assets', 'organic_origin_gutenberg_styles' );
 
 function nox_custom_scripts() {
+
     wp_register_style( 'custom-script-4',  plugin_dir_url( __FILE__ ) . 'jquery.fancybox.min.css' );
     wp_enqueue_style( 'custom-script-4'   );
 	wp_register_style( 'custom-script-5',  plugin_dir_url( __FILE__ ) . 'nox-style.css' );

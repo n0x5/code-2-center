@@ -17,8 +17,7 @@ Template Name: Wallpaper New
 </div>
 
 <div id="sidebar"> 
-
-<?php wp_nav_menu(array('menu' => 'Wallpaper')); ?>
+<?php dynamic_sidebar( 'sidebar-wallpaper' ); ?>
 </div>
 
 <div id="content">

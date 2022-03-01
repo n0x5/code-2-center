@@ -16,7 +16,7 @@ if(has_tag()) {
 $post_tags = get_the_tags();
 if (strpos($post_tags[0]->name, 'tt') === 0) {
 ?>
-
+<div id="entry">
 <div class="post" style="background-color: #740000;padding: 4px;border-bottom: 1px solid rgb(0 0 0);">
 
 
@@ -61,16 +61,18 @@ if (file_exists($img_dir)) {
 
     <br><br><h2>The review:</h2>
     <?php the_content('-> read more'); ?>
-    </div>
-<br><br>
+    </div><br><br></div>
+
     
 <?php                                    
 }}
 $dbh = null;
 } else { ?>
+    <div id="entry">
     <div class="title"><h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2><div class="subhead"><?php the_time('F jS, Y') ?></div></div>
     <div class="post">
     <?php the_content('-> read more'); ?>
+    </div>
     </div>
 <?php
 }
@@ -78,8 +80,11 @@ $dbh = null;
 
 <?php endwhile; ?>
 <?php endif; ?>
+
 <?php next_posts_link(__('&laquo; Previous Entries', 'code2center')) ?><br>
 <?php previous_posts_link(__('Newer Entries &raquo;','code2center')); ?>
 </div>
 </div>
+
 </body>
+<?php get_footer(); ?>
