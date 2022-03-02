@@ -11,11 +11,11 @@ Author URI:
 add_filter( 'xmlrpc_enabled', '__return_false' );
 
 function wpdocs_scripts_method() {
-	wp_register_script( 'custom-script-2', plugin_dir_url( __FILE__ ) . 'jquery.min.js', array(), false, true );
+    wp_register_script( 'custom-script-2', plugin_dir_url( __FILE__ ) . 'jquery.min.js', array(), false, true );
     wp_enqueue_script( 'custom-script-2', plugin_dir_url( __FILE__ ) . 'jquery.min.js', array(), false, true );
-	wp_register_script( 'custom-script-3', plugin_dir_url( __FILE__ ) . 'jquery.fancybox.min.js', array(), false, true );
+    wp_register_script( 'custom-script-3', plugin_dir_url( __FILE__ ) . 'jquery.fancybox.min.js', array(), false, true );
     wp_enqueue_script( 'custom-script-3', plugin_dir_url( __FILE__ ) . 'jquery.fancybox.min.js', array(), false, true );
-	wp_register_script( 'custom-script-1', plugin_dir_url( __FILE__ ) . 'box.js', array(), false, true );
+    wp_register_script( 'custom-script-1', plugin_dir_url( __FILE__ ) . 'box.js', array(), false, true );
     wp_enqueue_script( 'custom-script-1', plugin_dir_url( __FILE__ ) . 'box.js', array(), false, true );
 }
 add_action( 'wp_enqueue_scripts', 'wpdocs_scripts_method' );
@@ -28,19 +28,18 @@ add_action( 'wp_enqueue_scripts', 'wpdocs_scripts_method' );}
 add_action( 'pre_get_posts', 'exclude_category' );
 
 function organic_origin_gutenberg_styles() {
-	wp_register_style( 'custom-script-6',  plugin_dir_url( __FILE__ ) . 'nblock-styles.css' );
-	wp_enqueue_style( 'custom-script-6'   );
+    wp_register_style( 'custom-script-6',  plugin_dir_url( __FILE__ ) . 'nblock-styles.css' );
+    wp_enqueue_style( 'custom-script-6'   );
 }
 add_action( 'enqueue_block_editor_assets', 'organic_origin_gutenberg_styles' );
 
 function nox_custom_scripts() {
-
     wp_register_style( 'custom-script-4',  plugin_dir_url( __FILE__ ) . 'jquery.fancybox.min.css' );
     wp_enqueue_style( 'custom-script-4'   );
-	wp_register_style( 'custom-script-5',  plugin_dir_url( __FILE__ ) . 'nox-style.css' );
+    wp_register_style( 'custom-script-5',  plugin_dir_url( __FILE__ ) . 'nox-style.css' );
     wp_enqueue_style( 'custom-script-5'   );
-	wp_register_style( 'custom-script-6',  plugin_dir_url( __FILE__ ) . 'nblock-styles.css' );
-  	wp_enqueue_style( 'custom-script-6'   );
+    wp_register_style( 'custom-script-6',  plugin_dir_url( __FILE__ ) . 'nblock-styles.css' );
+    wp_enqueue_style( 'custom-script-6'   );
 }
 add_action( 'wp_enqueue_scripts', 'nox_custom_scripts' );
 
@@ -156,16 +155,16 @@ function custom_gallery($attr) {
                  $lr6nfo = substr($lr5nfo, strpos($lr5nfo, "/") + 1);
                  $lr4nfo = substr($lr6nfo, strpos($lr6nfo, "/") + 1);
                  $trunc_nfo = $string = substr($lr4nfo,0,45);
-				 $date5 = get_the_date('M d, Y', $attachment);
+                 $date5 = get_the_date('M d, Y', $attachment);
 
         $link = wp_get_attachment_link($id, 'medium', false, false);
 
         $output .= "
                          <div class='imgc'>
                 $link <div class=\"dimensions\">$lr2nfo
-				<div class=\"dlc\"> <div title=\"$lr4nfo\" class=\"filename1\">$trunc_nfo</div></div>
+                <div class=\"dlc\"> <div title=\"$lr4nfo\" class=\"filename1\">$trunc_nfo</div></div>
                      
-					  <div class=\"uploaded\">Uploaded: $date5</div>
+                      <div class=\"uploaded\">Uploaded: $date5</div>
             </div></div>";
         $output .= "";
     }
@@ -219,7 +218,7 @@ function add_metac($meta, $id){
     update_post_meta($id, 'camera', (string) $meta['image_meta']['camera']);
     update_post_meta($id, 'date_taken', (string) $meta['image_meta']['created_timestamp']);
     update_post_meta($id, 'credit', (string) $meta['image_meta']['credit']);
-	update_post_meta($id, 'copyright', (string) $meta['image_meta']['copyright']);
+    update_post_meta($id, 'copyright', (string) $meta['image_meta']['copyright']);
     update_post_meta($id, 'file', (string) $meta['file']);
     return $meta;
 
@@ -353,16 +352,13 @@ function add_img_s1ze( $block_content = '', $block = [] ) {
     $metadata = wp_get_attachment_metadata($innr);
     $width = $metadata['width'];
     $height = $metadata['height'];
-	$lr5nfo = esc_url(wp_get_attachment_url($innr));
-	$uploaded = get_the_time('', $innr);
-	$date5 = get_the_date('M d, Y', $innr);
-	$url3 = explode("/", $lr5nfo);
-	$url4 = end($url3);
-    $html = str_replace(
-      '</figure>',
-     '<div class="dimensions">' . $url4 . '<br>---<br>' . $width . 'x' . $height . '</div></figure>'  ,
-      $block_content
-    );
+    $lr5nfo = esc_url(wp_get_attachment_url($innr));
+    $uploaded = get_the_time('', $innr);
+    $date5 = get_the_date('M d, Y', $innr);
+    $url3 = explode("/", $lr5nfo);
+    $url4 = end($url3);
+    $html2 = str_replace('</figure>', '<div class="dimensions">' . $url4 . '<br>---<br>' . $width . 'x' . $height . '</div></figure>', $block_content);
+    $html = str_replace('<a href=', '<a data-fancybox="gallery" href=', $html2);
 
     return $html;
 }
@@ -397,30 +393,30 @@ add_action( 'publish_page', 'post_static_save', 10, 2 );
 add_filter( 'wp_lazy_loading_enabled', '__return_false' );
 
 function akv3_query_format_standard($query) {
-	if (isset($query->query_vars['post_format']) &&
-		$query->query_vars['post_format'] == 'post-format-standard') {
-		if (($post_formats = get_theme_support('post-formats')) &&
-			is_array($post_formats[0]) && count($post_formats[0])) {
-			$terms = array();
-			foreach ($post_formats[0] as $format) {
-				$terms[] = 'post-format-'.$format;
-			}
-			$query->is_tax = null;
-			unset($query->query_vars['post_format']);
-			unset($query->query_vars['taxonomy']);
-			unset($query->query_vars['term']);
-			unset($query->query['post_format']);
-			$query->set('tax_query', array(
-				'relation' => 'AND',
-				array(
-					'taxonomy' => 'post_format',
-					'terms' => $terms,
-					'field' => 'slug',
-					'operator' => 'NOT IN'
-				)
-			));
-		}
-	}
+    if (isset($query->query_vars['post_format']) &&
+        $query->query_vars['post_format'] == 'post-format-standard') {
+        if (($post_formats = get_theme_support('post-formats')) &&
+            is_array($post_formats[0]) && count($post_formats[0])) {
+            $terms = array();
+            foreach ($post_formats[0] as $format) {
+                $terms[] = 'post-format-'.$format;
+            }
+            $query->is_tax = null;
+            unset($query->query_vars['post_format']);
+            unset($query->query_vars['taxonomy']);
+            unset($query->query_vars['term']);
+            unset($query->query['post_format']);
+            $query->set('tax_query', array(
+                'relation' => 'AND',
+                array(
+                    'taxonomy' => 'post_format',
+                    'terms' => $terms,
+                    'field' => 'slug',
+                    'operator' => 'NOT IN'
+                )
+            ));
+        }
+    }
 }
 add_action('pre_get_posts', 'akv3_query_format_standard');
 
