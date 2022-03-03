@@ -358,9 +358,9 @@ function add_img_s1ze( $block_content = '', $block = [] ) {
     $url3 = explode("/", $lr5nfo);
     $url4 = end($url3);
     $html2 = str_replace('</figure>', '<div class="dimensions">' . $url4 . '<br>---<br>' . $width . 'x' . $height . '</div></figure>', $block_content);
-    $html = str_replace('<a href=', '<a data-fancybox="gallery" href=', $html2);
+    //$html = str_replace('<a href=', '<a data-fancybox="gallery" href=', $block_content);
 
-    return $html;
+    return $html2;
 }
   return $block_content;
 }
@@ -439,7 +439,7 @@ function custom_walker_nav_menu_start_el ( $item_output, $item, $depth, $args) {
      
         // set args
         $args = array( 
-            'depth' => 1,
+            'depth' => 0,
             'child_of' => $item->object_id,
             'echo' => 0, 
             'title_li' => ''
@@ -459,3 +459,83 @@ function custom_walker_nav_menu_start_el ( $item_output, $item, $depth, $args) {
 }
  
 add_filter( 'walker_nav_menu_start_el', 'custom_walker_nav_menu_start_el', 10, 4 );
+
+function breadcrumb_links($content) {
+    $parents = get_post_ancestors( $post->ID );
+    $title2 = get_the_title($post->ID);
+    $page_link2 = get_page_link($post->ID);
+    $url = get_bloginfo('url');
+    $title3 = get_the_title($url);
+
+    foreach ($parents as $value) {
+        $title = get_the_title($value);
+        $page_link = get_page_link($value);
+        $page_url = '<a href=' . $page_link .'>' . $title . '</a>';
+        $item_output1 = $page_url .' -> '. $item_output1;
+    }
+
+    $page_url2 = '<a href=' . $page_link2 .'>' . $title2 . '</a>';
+    $page_url3 = '<a href=' . $url .'>' . 'Home' . '</a>';
+    $beforecontent = '<h2>' . $page_url3 .' -> '. $item_output1 . $title2 . '</h2>';
+    $aftercontent = '';
+    $fullcontent = $beforecontent .'<br>' . '<br>' . $content . $aftercontent;
+
+    if ( is_page()  and !is_front_page() ) {
+        return $fullcontent;
+    } else {
+        return $content;
+    }
+}
+
+add_filter('the_content', 'breadcrumb_links');
+
+function code2center_widgets_init() {
+    register_sidebar( array(
+        'name'          => __( 'Sidebar 1', 'code2center' ),
+        'id'            => 'sidebar-1',
+        'description'   => __( 'Add widgets here to appear in your sidebar.', 'code2center' ),
+        'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</aside>',
+        'before_title'  => '<h2 class="widget-title">',
+        'after_title'   => '</h2>',
+    ) );
+}
+add_action( 'widgets_init', 'code2center_widgets_init' );
+
+function code2center_widgets_init_german() {
+    register_sidebar( array(
+        'name'          => __( 'German sidebar', 'code2center' ),
+        'id'            => 'sidebar-german',
+        'description'   => __( 'Add widgets here to appear in your sidebar.', 'code2center' ),
+        'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</aside>',
+        'before_title'  => '<h2 class="widget-title">',
+        'after_title'   => '</h2>',
+    ) );
+}
+add_action( 'widgets_init', 'code2center_widgets_init_german' );
+
+
+#### Gallery Index page shortcode
+#### Put [noxindex] shortcode in any page and it will grab all child pages with
+#### featured images and their title and create a grid gallery right in the page
+#### can be easily used to create galleries with sub galleries
+
+function n0x5_gallery() {
+    $pages = get_pages(array('parent'  => get_the_id()));
+    $result = wp_list_pluck( $pages, 'ID' );
+    foreach ($result as $thumb) {
+        $perma = get_permalink($thumb);
+        $title = get_the_title($thumb);
+        $thumbnail = get_the_post_thumbnail($thumb, 'thumbnail');
+		$sizes = wp_get_registered_image_subsizes();
+		$img_width = $sizes['thumbnail']['width'];
+        $thumb = '<div class="nox-item" style="width:'.$img_width.'px;float:left;"><div class="n0x-lnk"><a href="'.$perma.'">'.$thumbnail.'</a></div><div class="n0x-title">'.$title.'</div></div>';
+        $lnks = $thumb . $lnks;
+    }
+    return $lnks;
+}
+add_shortcode('noxindex', 'n0x5_gallery');
+
+
+
